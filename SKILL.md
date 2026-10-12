@@ -1,6 +1,6 @@
 ---
 name: ux-strategy
-description: UI/UX 전략·진단 컨설팅. 만들기 전·관통하는 "무엇을/어떻게 흐르게"를 설계한다. 실제 컨설팅펌 방법론(NN/g Double Diamond·휴리스틱 평가·McKinsey 이슈트리·MECE·피라미드 원칙·JTBD·RICE)을 권위 앵커로 사용. HTML 시안이 아니라 전략·진단 문서를 산출하고 비주얼 디자인 단계로 핸드오프. UX 진단·정보구조·사용자 여정·전환 퍼널·휴리스틱 평가 요청 시 자동 활성. /ux로 명시 호출.
+description: UI/UX 전략·진단 컨설팅. 만들기 전·관통하는 "무엇을/어떻게 흐르게"를 설계한다. 실제 컨설팅펌 방법론(Design Council Double Diamond·휴리스틱 평가·McKinsey 이슈트리·MECE·피라미드 원칙·JTBD·RICE)을 권위 앵커로 사용. HTML 시안이 아니라 전략·진단 문서를 산출하고 비주얼 디자인 단계로 핸드오프. UX 진단·정보구조·사용자 여정·전환 퍼널·휴리스틱 평가 요청 시 자동 활성. /ux-strategy로 명시 호출.
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 ---
 
@@ -34,7 +34,7 @@ ux-strategy        →  "무엇을 / 어떻게 흐르게"   (이 스킬: IA·여
 - UX 전략·제품 방향·"무엇부터 만들지"·우선순위
 - 기존 화면·프로토타입 "사용성 봐줘"
 
-명시 호출은 `/ux`.
+명시 호출은 `/ux-strategy`.
 
 ## 3가지 모드
 

@@ -1,6 +1,6 @@
-# /ux — Consulting-Grade UX Strategy & Diagnosis
+# /ux-strategy — Consulting-Grade UX Strategy & Diagnosis
 
-A Claude Code skill that does the **UX thinking that happens *before and across* the pixels** — information architecture, user journeys, heuristic diagnosis, prioritization, and strategy — using the **actual methodologies that UX and strategy consulting firms use**, each cited to its primary source.
+A Claude Code skill that does the **UX thinking that happens *before and across* the pixels** — information architecture, user journeys, heuristic diagnosis, prioritization, and strategy — using the **actual methodologies that UX and strategy consulting firms use**. Methods are linked to their sources (NN/g, Design Council, HBR, Google Research, …); some links are secondary explainers and are marked as such.
 
 It does **not** produce visual mockups. It produces **strategy and diagnosis documents**, then hands off to a visual-design step. Think of it as the consultant who frames the problem and tells you what to build and in what order — not the one who picks the colors.
 
@@ -8,16 +8,16 @@ It does **not** produce visual mockups. It produces **strategy and diagnosis doc
 
 Most "UX review" prompts give you vibes. This one is anchored to named, sourced methods:
 
-- **Double Diamond** (UK Design Council) · **Design Thinking** (IDEO)
+- **Double Diamond** (UK Design Council) · **Design Thinking** (Stanford d.school, Hasso Plattner Institute of Design)
 - **Heuristic Evaluation** with Nielsen's 10 heuristics + **Severity 0–4** rating (NN/g)
 - **Cognitive Walkthrough** · **UX Maturity model** (NN/g)
 - **JTBD** (Christensen) · **Empathy / Journey / Service maps**
-- **Issue trees + MECE** · **Hypothesis-driven analysis** (McKinsey)
+- **Issue trees + MECE** · **Hypothesis-driven analysis** (known as McKinsey-style)
 - **Pyramid Principle / SCQA** (Barbara Minto) for answer-first communication
 - **HEART + North Star metrics** · **RICE / Impact-Effort** prioritization
 - **McKinsey 7-step** problem-solving as the spine
 
-Every method in [`references/ux-methods.md`](references/ux-methods.md) carries its **source URL**, so the skill cites as it works instead of inventing frameworks from memory. That file is useful as a standalone consulting-methods reference even if you never run the skill.
+Every method in [`references/ux-methods.md`](references/ux-methods.md) carries a **source link**, and the skill is instructed to read that file first, which reduces made-up frameworks. That file is useful as a standalone consulting-methods reference even if you never run the skill.
 
 ### The DNA
 
@@ -28,7 +28,7 @@ Every method in [`references/ux-methods.md`](references/ux-methods.md) carries i
 The skill compresses the McKinsey 7-step process into a 5-step UX flow, with human gates at steps 1 and 4:
 
 ```text
-/ux <product, screen, or problem>
+/ux-strategy <product, screen, or problem>
    │
    ├─ 1. Frame the problem + SCQA + success metrics        🚪 gate
    ├─ 2. Structure it: issue tree, MECE funnel, Day-1 hypotheses
@@ -52,19 +52,33 @@ The skill compresses the McKinsey 7-step process into a 5-step UX flow, with hum
 
 ## Installation
 
+**Recommended:**
+
 ```bash
-cp -r consulting-ux-strategy/SKILL.md ~/.claude/skills/ux-strategy/SKILL.md
-cp -r consulting-ux-strategy/references ~/.claude/skills/ux-strategy/references
-cp consulting-ux-strategy/agents/ux-strategist.md ~/.claude/agents/ux-strategist.md
+npx skills add laymom/consulting-ux-strategy --skill ux-strategy
 ```
 
-Restart Claude Code, then type `/ux`.
+**Manual — macOS / Linux:**
+
+```bash
+git clone https://github.com/laymom/consulting-ux-strategy.git ~/.claude/skills/ux-strategy
+```
+
+**Manual — Windows (PowerShell):**
+
+```powershell
+git clone https://github.com/laymom/consulting-ux-strategy.git "$HOME\.claude\skills\ux-strategy"
+```
+
+**Optional batch agent (Claude Code only, manual copy):** copy `agents/ux-strategist.md` into `~/.claude/agents/`. `npx skills add` does not install it. The agent reads the skill files from `~/.claude/skills/ux-strategy/`, which is where the manual clone above puts them.
+
+Start a new Claude Code session and type `/ux-strategy`. Tested in Claude Code only.
 
 ## Usage
 
 ```text
-/ux our onboarding completion rate is low — diagnose and prioritize fixes
-/ux design the information architecture for a new habit-tracking app
+/ux-strategy our onboarding completion rate is low — diagnose and prioritize fixes
+/ux-strategy design the information architecture for a new habit-tracking app
 ```
 
 ## Handoff
@@ -79,4 +93,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Credits
 
-Built by **Sophia in Korea — a non-engineer who ships agents anyway.** Methodologies anchored to the primary sources cited in `references/ux-methods.md`.
+Built by **Sophia in Korea — a non-engineer who ships agents anyway.** Methodologies are linked to the sources listed in `references/ux-methods.md`.

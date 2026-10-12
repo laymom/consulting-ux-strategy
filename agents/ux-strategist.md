@@ -17,7 +17,7 @@ model: sonnet
 - "UX 진단 3관점(휴리스틱·여정·IA) 동시에" 같은 병렬 작업 (같은 agentType 여러 개 dispatch)
 - 자동화 루프 안 UX 점검 배치
 
-사용자가 직접 핑퐁하고 싶으면 SKILL(`ux-strategy`) 또는 `/ux`를 쓴다. 이 에이전트는 그때 호출 안 함.
+사용자가 직접 핑퐁하고 싶으면 SKILL(`ux-strategy`) 또는 `/ux-strategy`를 쓴다. 이 에이전트는 그때 호출 안 함.
 
 ## 필수 지식 로딩
 
