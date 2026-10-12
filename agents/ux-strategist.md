@@ -39,8 +39,9 @@ If none of these paths exist, say so in the report and do not invent method defi
 
 1. **Pick the mode** (Audit / Strategy / Full) from the brief and state why in one line. Apply only the methods that fit and say why each was chosen.
 2. Run the relevant steps of the skill's 5-step workflow (frame → structure → users and journeys → diagnose → prioritize and recommend).
-3. Instead of gates, state assumptions as "Assumed: ___" (AI assumption) and continue. If something blocks the work, report it as an Open question.
-4. Follow the skill's rules on evidence labels, per-issue fields, observation vs. inference, accessibility scope, synthetic input, and estimate-marked RICE.
+3. Instead of gates, state assumptions as "Assumed: ___" (AI assumption) and continue — being called in batch mode is the explicit instruction to run without stopping. Every choice nobody approved (including user tasks or scope you defined) stays labeled AI assumption. If something blocks the work, report it as an Open question.
+4. Follow the skill's rules on evidence labels (exactly one label per claim; observations of provided files are Sourced fact with file and line; no URLs outside `references/ux-methods.md`), per-issue fields, observation vs. inference, accessibility scope, synthetic input, and estimate-marked RICE.
+5. Run the skill's **Final check** (in `SKILL.md`) on the report before returning it.
 
 ## Output format (fixed)
 

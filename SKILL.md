@@ -39,17 +39,20 @@ Explicit invocation: `/ux-strategy`.
 
 ## Evidence labels
 
-Label every claim, input, and finding with one of these (exact names):
+Label every claim, input, and finding with exactly **one** of these names — no combinations, no extra qualifiers inside the label:
 
 | Label | Use for |
 |---|---|
 | **User-provided fact** | Stated by the user or in their materials (PRD, analytics they shared) |
-| **Sourced fact** | From an external source — always with the link |
+| **Sourced fact** | From a source, always cited: a link from `references/ux-methods.md`, or the user's own provided file with a line (e.g. `signup-mock.html:83`). What you directly observed in the provided code or screens is a Sourced fact cited this way |
 | **Real user research** | Results of research with real users (interviews, usability tests, analytics, card sorts) that the user provided |
 | **AI assumption** | Your own inference or estimate |
 | **Synthetic persona response** | Output from simulated personas (e.g. a synthetic focus group). Never treat as real user research |
 | **Approved decision** | Something the user confirmed at a gate |
 | **Open question** | Unknown; needs an answer or research |
+
+- Never add a URL that is not in `references/ux-methods.md` (web access may be off; never add unverified links). Claims about industry norms, benchmarks, or "in <year>" need such a source; otherwise drop them or label them AI assumption.
+- Statements about the scope of the review itself (e.g. "I read the code only") need no label.
 
 ## Modes — pick one from the brief
 
@@ -76,11 +79,18 @@ Label every claim, input, and finding with one of these (exact names):
 
 Gates at Steps 1 and 4 only. Other steps proceed on their own, each ending with a one-line summary. Audit mode usually runs a light Step 1, then Step 4 and Step 5. Strategy mode usually runs Steps 1–3 and 5.
 
+**Gate rules**
+- At a gate, ask, then stop and wait for the user's reply. Do not continue past the gate in the same turn.
+- If the brief already answers a gate, state your assumption in one line, then still stop at that gate once.
+- If a gate question gets no answer (non-interactive session, a question tool returns nothing), stop and say exactly what approval is needed. Never "proceed with the default".
+- Only if the user explicitly said to run without stopping, continue — and label every choice they did not approve as AI assumption.
+- Anything you propose that the brief did not state (user tasks such as T1–T4, scope, metrics) is an AI assumption until approved at a gate.
+
 ### Step 1 — Frame the problem (SCQA) 🚪 GATE 1
 - State the **core question** in one SMART sentence (e.g. "Can we raise onboarding completion within 3 months?").
 - **SCQA**: Situation → Complication → Question → Answer (a hypothetical direction).
 - **Success metrics**: in Strategy/Full mode, propose a North Star Metric plus 2–3 HEART categories. In Audit mode, name the user tasks being checked instead.
-- 🚪 Get the user's OK on the question and metrics/tasks before Step 2. If the brief already states them, confirm in one line instead of re-asking.
+- 🚪 Get the user's OK on the question and metrics/tasks before Step 2 (see Gate rules).
 
 ### Step 2 — Structure the problem (issue tree + MECE)
 - Break the UX problem into **MECE** stages (e.g. awareness / onboarding / core loop / retention).
@@ -117,7 +127,7 @@ Use the scales in `ux-methods.md` exactly.
 
 **Observation vs. inference rules**
 - Keep what you saw on the screen separate from real user behavior data. A screen review is observation plus AI assumption, not behavior data.
-- Never claim drop-off causes or conversion lift from a screen review. Say "may contribute to" and point to the data that would confirm it.
+- Never claim drop-off causes or conversion lift from a screen review, and never rank causes of drop-off. Say "may contribute to …; validate with …" and point to the data that would confirm it.
 - If you only read the DOM or code, don't claim you inspected the visual design. If you cannot see the screen, say so.
 - If accessibility comes up, state the scope and tool used (e.g. "manual check of contrast and labels in the code"). Never imply WCAG certification or full conformance.
 
@@ -132,9 +142,19 @@ Use the scales in `ux-methods.md` exactly.
 
 - Lead with the conclusion in plain sentences, then put tables and scores behind it as support. Don't open with framework names or score tables.
 - State the mode and why, and the methods used and why, near the top.
-- Cite a source (URL from `ux-methods.md`) whenever you use a method.
+- Cite a source (URL from `ux-methods.md`) whenever you use a method — including where it is applied (e.g. Pyramid Principle/SCQA at the recommendation), once there.
 - Separate your opinions from facts with evidence labels.
 - If saving a document, use `.md` (and an HTML report viewer only on request) in the user's project folder.
+
+## Final check — run on the finished report before sending
+
+Fix the report until every answer is "yes":
+
+1. Search the report for "conversion", "drop-off", "abandon", "killer", "costing", "likeliest", "will increase". Without real usage data, is every such claim rewritten as a hypothesis ("may contribute to …; validate with …"), with no ranking of drop-off causes?
+2. Is every evidence label exactly one of the 7 names? (No combinations such as "AI assumption + JTBD inference". Direct observations of the provided files are Sourced fact with file and line.)
+3. Does every Sourced fact link come from `references/ux-methods.md`, or point to the user's own provided file and line? No other URLs.
+4. Is every claim about industry norms, benchmarks, or "in <year>" sourced — or removed or labeled AI assumption?
+5. Where a method is applied (e.g. Pyramid Principle/SCQA in the recommendation), is its source link cited once there?
 
 ## Never
 
@@ -142,4 +162,4 @@ Use the scales in `ux-methods.md` exactly.
 - Invent method definitions from memory (→ read `ux-methods.md` first)
 - Fabricate user test results, analytics, or quotes. Real testing is the team's job; this skill designs and recommends
 - Present synthetic persona responses as real user research
-- Skip GATE 1 or GATE 2
+- Skip GATE 1 or GATE 2, or continue past an unanswered gate

@@ -18,6 +18,16 @@
 - README reordered: summary, example, install, input example, what happens, how it differs, limits, related tools, sources. The agent is documented as optional and Claude Code only, with separate install commands
 - Wording: "consulting-grade" and "the methods consulting firms use" replaced with "consulting-style methods"; the claim that every method has a primary source was removed; author-specific tone instructions replaced with neutral wording
 
+### Fixed (found in a real run)
+- Gates: an unanswered gate (non-interactive session, a question tool returning nothing) now stops with a statement of the approval needed; the skill no longer "proceeds with the default". A gate the brief already answers is stated as an assumption and still stops once, unless the user explicitly asked to run without stopping (then every unapproved choice is labeled AI assumption)
+- User tasks the skill defines itself (e.g. T1–T4) are AI assumptions until approved at GATE 1
+- Evidence labels: exactly one of the 7 names per claim (no combinations such as "AI assumption + JTBD inference"); direct observations of the user's provided files are Sourced fact, cited with file and line
+- No URLs outside `references/ux-methods.md` or the user's own files; claims about industry norms, benchmarks, or "in <year>" need a source or become AI assumption
+- No ranking of drop-off causes and no conversion claims ("killer", "likeliest", "will increase") from a screen review; such claims are written as hypotheses with a way to validate
+- Method sources are cited where the method is applied (e.g. Pyramid Principle at the recommendation)
+- New "Final check" section in `SKILL.md`, run on the finished report before sending; the batch agent runs it too
+- `examples/signup-audit.md` re-run with this version
+
 ### Fixed (6b53ed4)
 - Invocation is `/ux-strategy`, and install steps were corrected
 - Sources added or corrected for Design Council (Double Diamond), Stanford d.school, Minto, HEART, and Strategyzer

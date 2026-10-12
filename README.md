@@ -4,28 +4,29 @@
 
 ## Example
 
-Excerpt from an audit of a 3-step signup mock (fields quoted from the report, shortened to fit):
+Excerpt from an audit of a 3-step signup mock (quoted from the run, shortened to fit):
 
 ```text
-Mode: Audit (you asked to review one existing flow).
-Scope reviewed: signup-mock.html — DOM and inline JS. I did not open the file in a browser.
+Mode: Audit — Steps 1 → 4 → 5.
+Reviewer caveat: one AI reviewer reading the DOM/JS of signup-mock.html only —
+  no rendered page, no accessibility tooling, no real users.
 
-F1 — Password field is wiped on validation failure · Severity 4
-  Where observed:  step 1, submit handler at lines 83–89. Inspected: inline JS.
-  Severity reason: a hard mechanical punishment on a step 100% of users must pass,
-                   with no in-product way to recover gracefully.
-  How to validate: instrument step-1 submit attempts vs. successful transitions;
-                   moderated test with 5 users on mobile, measure retries.
-  Evidence label:  AI assumption (code-based)
+GATE 1 — please confirm before I run the heuristic pass   (it stopped and waited)
 
-F6 — Notification "Skip" link is styled as a dark pattern · Severity 3
-  Where observed:  step 3, line 18 CSS: .skip is 11px, color #bbb.
-  How to validate: compare Allow rates before/after; quick accessibility pass on contrast.
-  Evidence label:  AI assumption (code-based). Contrast claim: manual check of CSS
-                   color values, not a WCAG certification.
+F1 — Password field wiped on validation failure · Severity 4
+  Where:            signup-mock.html:87 — document.getElementById('pw').value = '';
+  Expected impact:  Perceived hostility at the first interaction. May contribute
+                    to T1 attrition; validate.
+  How to validate:  5-user think-aloud pre-launch (count attempts to pass Step 1);
+                    post-launch, log Step 1 attempt counts.
+  Evidence:         Sourced fact (code); expected impact AI assumption.
+
+F16 — No SSO · Severity 1
+  Apple's App Store rules may require Sign-in-with-Apple alongside; AI assumption,
+  verify current App Store guidelines before implementing.
 ```
 
-Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (user answers role-played by an AI; see run notes).
+Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (user answers role-played by an AI; the run notes list what still deviates).
 
 ## Install
 
