@@ -1,107 +1,145 @@
 ---
 name: ux-strategy
-description: UI/UX 전략·진단 컨설팅. 만들기 전·관통하는 "무엇을/어떻게 흐르게"를 설계한다. 실제 컨설팅펌 방법론(Design Council Double Diamond·휴리스틱 평가·McKinsey 이슈트리·MECE·피라미드 원칙·JTBD·RICE)을 권위 앵커로 사용. HTML 시안이 아니라 전략·진단 문서를 산출하고 비주얼 디자인 단계로 핸드오프. UX 진단·정보구조·사용자 여정·전환 퍼널·휴리스틱 평가 요청 시 자동 활성. /ux-strategy로 명시 호출.
+description: UX audit and strategy. Reviews screens, flows, and information architecture, and plans what to build and how it should flow, using consulting-style methods (Design Council Double Diamond, Nielsen heuristic evaluation with severity 0–4, issue trees and MECE, Pyramid Principle, JTBD, HEART, RICE). Every finding is tied to evidence, severity, priority, and a next validation step. Produces strategy and diagnosis documents, not visual mockups, and hands off to a visual-design step. Use for UX audits, usability reviews, heuristic evaluation, information architecture, user journeys, onboarding or conversion funnels, and UX prioritization. Invoke explicitly with /ux-strategy.
 allowed-tools: Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 ---
 
-# UX Strategy Skill (UX 전략·진단 컨설팅)
+# UX Strategy Skill
 
-제품을 **만들기 전 또는 관통하는 UX 설계와 진단**을 수행한다. 실제 UX/전략 컨설팅펌이 현장에서 쓰는 검증된 방법론을 앵커로 사용하되, 사용자 컨텍스트(린 협업·대화체 보고)에 맞춰 각색.
+Audits and plans UX: what to build, how it should flow, what is broken, and what to fix first. Every finding is tied to evidence, a severity, a priority, and a way to validate it next. Uses consulting-style methods, cited from `references/ux-methods.md`.
 
-## 역할 분담 — 무엇을 안 하나
+Write all output in the language of the user's input.
 
-이 스킬은 **전략·진단 문서**를 낸다. HTML 시안·픽셀 디자인은 내지 않는다.
+## What this skill does not do
+
+This skill produces **strategy and diagnosis documents**. It does not produce HTML mockups or pixel designs.
 
 ```text
-ux-strategy        →  "무엇을 / 어떻게 흐르게"   (이 스킬: IA·여정·진단·전략)
-비주얼 디자인 단계  →  "어떻게 보이게"            (시각 시안 산출 — 핸드오프 대상)
-시각 검수 단계      →  "잘 됐나"                 (미학·완성도 평가)
+ux-strategy           →  "what, and how it flows"   (this skill: IA, journeys, diagnosis, strategy)
+visual design step    →  "how it looks"             (visual mockups — handoff target)
+visual review step    →  "is it well made"          (aesthetics, polish)
 ```
 
-겹침이 의심되면 멈추고 사용자에게 "이건 시각 디자인 산출이라 디자인 단계가 맞을 것 같은데요?"라고 되묻는다.
+If a request looks like visual design, stop and ask: "This sounds like visual design output — should it go to a design step instead?" A report viewer (e.g. an HTML page that displays this skill's report) is fine on request; it is not a product screen design.
 
-## DNA — 컨설팅 핵심 원칙
+## Core principle
 
-> **"생각은 아래에서 위로, 말은 위에서 아래로 (Think bottom-up, Communicate top-down)"**
+> **Think bottom-up, communicate top-down.**
 
-분석은 데이터·사용자에서 출발하지만, 보고는 항상 **결론(권고)부터**. 모든 산출물은 피라미드 원칙(answer-first)으로 전달한다. 자세한 방법론은 작업 시작 시 `references/ux-methods.md`를 **반드시 먼저 읽는다** — 추측으로 방법론을 지어내지 않는다.
+Analysis starts from data and users; the report always starts with the conclusion (Pyramid Principle, answer-first). **Read `references/ux-methods.md` before starting** — never reconstruct a method from memory.
 
-## 자동 활성 트리거
+## Triggers
 
-- UX 진단·사용성 점검·휴리스틱 평가·"써보니 불편"·"이탈이 많아"
-- 정보구조(IA)·메뉴 구조·내비게이션·"어디에 뭘 둘지"
-- 사용자 여정·플로우·온보딩·전환 퍼널·"왜 안 쓰지"
-- UX 전략·제품 방향·"무엇부터 만들지"·우선순위
-- 기존 화면·프로토타입 "사용성 봐줘"
+- UX audit, usability review, heuristic evaluation, "this is hard to use", "people drop off here"
+- Information architecture, menu structure, navigation, "where should things go"
+- User journeys, flows, onboarding, conversion funnels, "why don't people use it"
+- UX strategy, product direction, "what should we build first", prioritization
 
-명시 호출은 `/ux-strategy`.
+Explicit invocation: `/ux-strategy`.
 
-## 3가지 모드
+## Evidence labels
 
-| 모드 | 트리거 | 중심 산출물 |
-|---|---|---|
-| **진단형** (Audit) | 기존 화면·프로토타입 "사용성 봐줘"·"불편한 데 찾아줘" | 휴리스틱 평가 리포트 (문제 + severity + 개선안) |
-| **전략수립형** (Strategy) | 신규 제품·"무엇을 어떻게"·"방향 잡아줘" | UX 전략 문서 (비전·IA·여정·로드맵) |
-| **풀패키지** (Full) | "처음부터 끝까지"·신규 MVP 전체 | Double Diamond 전 구간 1·2·3·4·5단계 |
+Label every claim, input, and finding with one of these (exact names):
 
-모드가 모호하면 추측하지 말고 사용자에게 한 줄로 물어본다.
-
-## 시작 전 필독 (on-demand)
-
-| 파일 | 언제 |
+| Label | Use for |
 |---|---|
-| `references/ux-methods.md` | **항상** 첫 단계. 방법론 정의·수행절차·체크리스트·출처 앵커 |
-| `references/handoff-map.md` | 핸드오프·다른 워크플로 연계 판단 시 |
-| 기존 PRD 문서 | 해당 제품 PRD 있으면 입력으로 |
-| 기존 화면 HTML | 진단형일 때 대상 화면 Read |
+| **User-provided fact** | Stated by the user or in their materials (PRD, analytics they shared) |
+| **Sourced fact** | From an external source — always with the link |
+| **Real user research** | Results of research with real users (interviews, usability tests, analytics, card sorts) that the user provided |
+| **AI assumption** | Your own inference or estimate |
+| **Synthetic persona response** | Output from simulated personas (e.g. a synthetic focus group). Never treat as real user research |
+| **Approved decision** | Something the user confirmed at a gate |
+| **Open question** | Unknown; needs an answer or research |
 
-## 워크플로 — 컨설팅 7단계를 UX 5단계로
+## Modes — pick one from the brief
 
-게이트는 ①과 ④ 두 곳만. 나머지는 자율 진행하되 각 단계 끝에 한 줄 요약.
+| Mode | Use when | Core output | Skip by default |
+|---|---|---|---|
+| **Audit** | Review existing screens, a prototype, or key flows | Issue list for the main user tasks (problem, severity, fix, how to validate) | North Star, full issue tree, roadmap |
+| **Strategy** | Decide IA, journeys, and priorities for a product or feature | Strategy doc (direction, IA, journey, priorities) | Exhaustive heuristic pass |
+| **Full** | Only when the user asks for end-to-end work (e.g. a new MVP from scratch) | All 5 steps below | — |
 
-### Step 1 — 문제 정의 + SCQA 프레이밍 🚪 GATE 1
-McKinsey 7단계의 Define. 추측 금지, 사용자와 합의.
-- **핵심 질문**을 SMART하게 한 문장으로 ("3개월 내 온보딩 완료율을 X%로 올릴 수 있는가?")
-- **SCQA**로 상황 정리: Situation(현재) → Complication(무엇이 바뀌었나/문제) → Question(그래서 질문) → Answer(가설적 방향)
-- **성공지표** 합의: North Star Metric 1개 + HEART 중 2~3개 (`ux-methods.md` 참조)
-- 🚪 핵심 질문·지표 OK 받기 전 Step 2 진입 금지
+- Choose the mode from the brief and state it in one line with the reason ("Audit mode — you asked about one signup screen").
+- Apply only the methods that fit, and say in one line why each was chosen. A small screen check does not need a North Star or a full issue tree.
+- Don't re-ask what the brief already answers. Ask only for what is missing and blocks the work; if the mode is truly ambiguous, ask one short question.
 
-### Step 2 — 문제 구조화 (이슈 트리 + MECE)
-- UX 문제를 **퍼널/단계로 MECE 분해** (예: 인지 / 온보딩 / 핵심루프 / 리텐션 — 겹치지 않고 전체 포괄)
-- 각 가지에 **Day-1 가설** 부착 ("온보딩 3→2단계 축소 시 완료율 15%+")
-- 80/20으로 핵심 2~3개 가지에 별표 → 집중 분석 대상
-- 가지·가설은 표가 아니라 **트리 구조를 말로 풀어** 설명 (대화체)
+## Read before starting
 
-### Step 3 — 사용자·여정 이해
-모드·필요에 따라 골라 쓴다 (다 쓰지 않음):
-- **JTBD**: "사용자가 이 제품을 고용하는 진짜 Job" 재정의 (기능적/사회적/감성적)
-- **Empathy Map** (Says/Thinks/Does/Feels) — 페르소나 정렬 필요 시. 정성 피드백(예: 포커스그룹) 결과 있으면 입력으로
-- **Journey Map** (Phases/Actions/Thoughts/Emotions) — 단계별 감정·이탈점 추적
-- **IA**: 메뉴·구조 문제면 카드소팅(open/closed/hybrid) + 트리테스트 **권고** (실제 사용자 테스트는 팀이 실행 — 이 스킬은 설계·권고)
+| File | When |
+|---|---|
+| `references/ux-methods.md` | **Always**, first. Method definitions, procedures, scales, sources |
+| `references/handoff-map.md` | When deciding what comes next |
+| The user's PRD / spec | If provided |
+| Screens, HTML, screenshots, or code | In Audit mode, read the target |
 
-### Step 4 — 진단 (휴리스틱 평가 + Cognitive Walkthrough) 🚪 GATE 2
-진단형·풀패키지의 핵심. `ux-methods.md`의 척도 그대로 사용.
-- **휴리스틱 평가**: Nielsen 10원칙 대조, 문제마다 **severity 0~4** 부여 (0=문제아님 ~ 4=출시 전 필수수정)
-- 복잡한 신규 플로우면 **Cognitive Walkthrough** 4질문 적용
-- 진단 결과는 **severity 높은 순**으로 정렬해 제시
-- 🚪 진단 결과·우선순위 OK 받고 Step 5 진입
+## Workflow (consulting steps compressed into 5)
 
-### Step 5 — 우선순위 + 권고 (피라미드 원칙) + 핸드오프
-- **우선순위**: 과제 5~20개면 Impact/Effort 2x2, 30개+거나 Reach 편차 크면 RICE 공식
-- **권고문은 피라미드 원칙 + answer-first**: 결론(권고) 한 문장 먼저 → MECE한 3~5개 근거 → 데이터
-- **So-What 테스트**: 권고에 직결 안 되는 분석은 잘라낸다
-- **핸드오프**: `references/handoff-map.md` 따라 다음 단계로 — 시각화 필요하면 비주얼 디자인, 정식 스펙화면 PRD, 사업 진입 판단이면 사업성 검토
+Gates at Steps 1 and 4 only. Other steps proceed on their own, each ending with a one-line summary. Audit mode usually runs a light Step 1, then Step 4 and Step 5. Strategy mode usually runs Steps 1–3 and 5.
 
-## 산출물 형식
+### Step 1 — Frame the problem (SCQA) 🚪 GATE 1
+- State the **core question** in one SMART sentence (e.g. "Can we raise onboarding completion within 3 months?").
+- **SCQA**: Situation → Complication → Question → Answer (a hypothetical direction).
+- **Success metrics**: in Strategy/Full mode, propose a North Star Metric plus 2–3 HEART categories. In Audit mode, name the user tasks being checked instead.
+- 🚪 Get the user's OK on the question and metrics/tasks before Step 2. If the brief already states them, confirm in one line instead of re-asking.
 
-- **대화하듯** 쓴다. 표·점수·프레임워크 이름을 먼저 던지는 컨설팅 결과보고 모드 금지. 후배 기획자에게 설명하듯 풀어 쓰고, 표·점수는 근거로 뒤에 붙인다.
-- 문서 저장 시 `.md` + (요청 시) HTML 뷰어. 위치는 해당 프로젝트 폴더.
-- 방법론을 쓸 때마다 **출처를 명시** (ux-methods.md의 URL). "이건 닐슨 휴리스틱 기준이에요"처럼.
-- 어시스턴트 추정·의견은 "이건 제 판단이에요"로 사실과 분리.
+### Step 2 — Structure the problem (issue tree + MECE)
+- Break the UX problem into **MECE** stages (e.g. awareness / onboarding / core loop / retention).
+- Attach a **Day-1 hypothesis** to each branch, labeled AI assumption (e.g. "Cutting onboarding from 3 steps to 2 may raise completion — to be validated").
+- Mark the 2–3 branches that matter most (80/20) for focused analysis.
+- Explain the tree in sentences, not just a table.
 
-## 금지
+### Step 3 — Understand users and journeys
+Pick what fits (not all):
+- **JTBD**: the real job the user hires the product for (functional / social / emotional).
+- **Empathy Map** (Says / Thinks / Does / Feels) and **Journey Map** (Phases / Actions / Thoughts / Emotions). If the inputs are synthetic persona responses or AI assumptions, title the map "hypothetical (synthetic input)".
+- **IA**: for menu or structure problems, **recommend** card sorting (open / closed / hybrid) and tree testing. The team runs them with real users; this skill designs and recommends.
 
-- HTML 픽셀 시안 산출 (→ 비주얼 디자인 단계)
-- 방법론 정의를 기억으로 지어내기 (→ ux-methods.md 먼저 읽기)
-- 사용자 테스트 결과를 가짜로 채우기 (실제 테스트는 팀이 실행, 이 스킬은 설계·권고만)
-- GATE 1·2 건너뛰고 진행
+### Step 4 — Diagnose (heuristic evaluation, cognitive walkthrough) 🚪 GATE 2
+Use the scales in `ux-methods.md` exactly.
+- **Heuristic evaluation** against Nielsen's 10. Note that this is one AI reviewer, while a heuristic evaluation normally uses 3–5 evaluators.
+- **Cognitive walkthrough** (4 questions) for complex new flows.
+- Record **every issue** with these fields:
+
+| Field | Content |
+|---|---|
+| Where observed | Screen / step / element, and what you actually inspected (rendered screen, screenshot, DOM/code, description) |
+| User task | The task the user is trying to do |
+| Problem | What goes wrong |
+| Expected impact | Effect on the user — stated as expected, not measured |
+| Related principle | Heuristic number/name or other method, with source |
+| Severity + reason | 0–4, and why |
+| Fix | Recommended change |
+| How to validate | The test or data that would confirm the problem and the fix |
+| Evidence label | From the list above |
+
+- Sort by severity, highest first.
+- 🚪 Get the user's OK on the findings before Step 5.
+
+**Observation vs. inference rules**
+- Keep what you saw on the screen separate from real user behavior data. A screen review is observation plus AI assumption, not behavior data.
+- Never claim drop-off causes or conversion lift from a screen review. Say "may contribute to" and point to the data that would confirm it.
+- If you only read the DOM or code, don't claim you inspected the visual design. If you cannot see the screen, say so.
+- If accessibility comes up, state the scope and tool used (e.g. "manual check of contrast and labels in the code"). Never imply WCAG certification or full conformance.
+
+### Step 5 — Prioritize, recommend, hand off
+- **Priority**: with thin data, prefer an evidence-based qualitative priority (severity + evidence label + reason). Use an Impact/Effort 2x2 when effort is roughly known, and RICE only when the team has real Reach and Effort numbers; otherwise mark RICE inputs as estimates (AI assumption).
+- **Recommendation** (Pyramid Principle): one-sentence conclusion first → 3–5 MECE reasons → data.
+- **So-what test**: cut analysis that does not bear on the recommendation.
+- **Next validation**: for each top recommendation, name the cheapest test that would confirm or reject it.
+- **Handoff**: follow `references/handoff-map.md` — visual design, PRD, or business review.
+
+## Output format
+
+- Lead with the conclusion in plain sentences, then put tables and scores behind it as support. Don't open with framework names or score tables.
+- State the mode and why, and the methods used and why, near the top.
+- Cite a source (URL from `ux-methods.md`) whenever you use a method.
+- Separate your opinions from facts with evidence labels.
+- If saving a document, use `.md` (and an HTML report viewer only on request) in the user's project folder.
+
+## Never
+
+- Produce HTML pixel mockups (→ visual design step)
+- Invent method definitions from memory (→ read `ux-methods.md` first)
+- Fabricate user test results, analytics, or quotes. Real testing is the team's job; this skill designs and recommends
+- Present synthetic persona responses as real user research
+- Skip GATE 1 or GATE 2

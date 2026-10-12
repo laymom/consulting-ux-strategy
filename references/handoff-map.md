@@ -1,51 +1,53 @@
-# UX Strategy 핸드오프 맵
+# UX Strategy Handoff Map
 
-이 스킬은 "무엇을/어떻게 흐르게"까지만. 다음 단계는 아래로 넘긴다. 넘기기 전 사용자에게 "다음은 ___로 넘길까요?" 한 줄 확인.
+This skill covers "what, and how it flows". The next steps go elsewhere. Before handing off, confirm with the user in one line: "Should this go to ___ next?"
 
-## 가치 사슬 위치
+## Position in the value chain
 
 ```text
-[사업성 판단]      시장 진입 결정 (Go/No-go)
-     │ Go
+[Business review]    market entry decision (go / no-go)
+     │ go
      ▼
-[PRD화]            요구사항 정의 (WHAT/WHY, 유저스토리·수용조건)
+[PRD]                requirements (what / why, user stories, acceptance criteria)
      │
      ▼
-[ux-strategy] ←── 여기. IA·여정·진단·전략 (HOW it flows)
+[ux-strategy] ←───── here. IA, journeys, diagnosis, strategy (how it flows)
      │
      ▼
-[비주얼 디자인]    시각 시안 (HOW it looks)
+[Visual design]      visual mockups (how it looks)
      │
      ▼
-[시각 검수]        완성도·미학 평가
+[Visual review]      polish and aesthetics
 ```
 
-이 단계들은 각각 별도 워크플로(슬래시 커맨드·에이전트·디자인 툴 등 환경에 맞게)로 구현하면 된다. 이 스킬은 그 사슬에서 **흐름 설계** 자리를 맡는다.
+Each of these steps can be its own workflow (a slash command, an agent, a design tool — whatever fits your setup). This skill fills the **flow design** slot in that chain.
 
-## 어디서 받나 (입력)
+## Inputs (where work comes from)
 
-- **PRD 핸드오프**: 요구사항 정의 완료 후 UX 전략·IA 설계가 필요할 때. PRD 문서를 입력으로.
-- **사업성 판단 Go 직후**: 진입 결정 후 제품 UX 방향 잡을 때.
-- **직접 호출**: `/ux-strategy` 또는 자동 트리거. 기존 화면 진단도 포함.
-- **정성 피드백 결과**: 페르소나 정성 피드백을 Empathy Map·Journey Map 입력으로. (예: 합성 페르소나 포커스그룹 — https://github.com/laymom/synthetic-focus-group )
+- **From a PRD**: when requirements are done and UX strategy or IA is needed. Use the PRD as input.
+- **After a go decision**: to set the product's UX direction.
+- **Direct invocation**: `/ux-strategy` or an automatic trigger, including audits of existing screens.
+- **Qualitative feedback**: persona feedback as input to empathy and journey maps. Keep its evidence label: synthetic persona output (e.g. from https://github.com/laymom/synthetic-focus-group ) stays labeled **Synthetic persona response**, and maps built from it are titled "hypothetical (synthetic input)". Only research with real users counts as **Real user research**.
 
-## 어디로 넘기나 (출력)
+## Outputs (where work goes)
 
-| 다음 필요 | 넘길 곳 | 무엇을 전달 |
+| Next need | Hand off to | What to pass |
 |---|---|---|
-| 화면 시각화·HTML 시안 | 비주얼 디자인 단계 | IA 구조·핵심 플로우·화면별 UX 요구사항 |
-| 정식 요구사항 정의 | PRD화 단계 | 검증된 UX 전략·우선순위 |
-| 사업성·시장 재검토 | 사업성 판단 단계 | UX 진단에서 드러난 구조적 문제 |
-| 정성 피드백 수집 | 포커스그룹·사용자 인터뷰 | 검증할 IA·플로우 시안 |
-| 외부 사실·벤치마크 | 리서치 단계 | 경쟁사 UX 패턴·통계 |
+| Screen visuals, HTML mockups | Visual design step | IA structure, key flows, UX requirements per screen |
+| Formal requirements | PRD step | Approved UX strategy and priorities |
+| Business or market re-check | Business review step | Structural problems found in the UX diagnosis |
+| Qualitative feedback | Focus group or user interviews | The IA and flows to be tested |
+| External facts, benchmarks | Research step | Competitor UX patterns, statistics |
 
-## 배치 모드(ux-strategist Agent)와의 관계
+Keep the evidence labels (User-provided fact, Sourced fact, Real user research, AI assumption, Synthetic persona response, Approved decision, Open question) on everything you pass along.
 
-- 사용자와 핑퐁하며 게이트 진행 → **이 SKILL**
-- 다른 워크플로가 격리 컨텍스트에서 "UX 진단 한 방에" 또는 "3관점 동시 진단" 병렬 호출 → **ux-strategist Agent** (같은 ux-methods.md 공유, 게이트 없음)
+## Relation to the batch agent (ux-strategist)
 
-## 중복 방지 룰
+- Interactive, with gates → **this skill**
+- Another workflow wants a one-shot diagnosis in an isolated context, or several lenses in parallel → **ux-strategist agent** (same `ux-methods.md`, no gates)
 
-- "예쁘게/색감/레이아웃/컴포넌트" 요청 → 이 스킬 아님. 비주얼 디자인 단계로 안내.
-- "미학적으로 평가해줘" → 시각 검수 단계.
-- 이 스킬은 **사용성·구조·흐름·전략·지표**가 핵심어일 때만.
+## Avoiding overlap
+
+- "Make it pretty", colors, layout, components → not this skill. Point to the visual design step.
+- "Evaluate it aesthetically" → visual review step.
+- This skill is for **usability, structure, flow, strategy, and metrics**.

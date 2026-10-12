@@ -1,96 +1,133 @@
-# /ux-strategy — Consulting-Grade UX Strategy & Diagnosis
+# /ux-strategy — UX Audit and Strategy for Claude Code
 
-A Claude Code skill that does the **UX thinking that happens *before and across* the pixels** — information architecture, user journeys, heuristic diagnosis, prioritization, and strategy — using the **actual methodologies that UX and strategy consulting firms use**. Methods are linked to their sources (NN/g, Design Council, HBR, Google Research, …); some links are secondary explainers and are marked as such.
+**For product managers, designers, and founders: get a UX audit or strategy report in which every finding is tied to evidence, a severity, a priority, and the next test that would confirm it.**
 
-It does **not** produce visual mockups. It produces **strategy and diagnosis documents**, then hands off to a visual-design step. Think of it as the consultant who frames the problem and tells you what to build and in what order — not the one who picks the colors.
+## Example
 
-## Why it's different
+<!-- EXAMPLE: filled in phase 2 -->
 
-Most "UX review" prompts give you vibes. This one is anchored to named, sourced methods:
+## Install
 
-- **Double Diamond** (UK Design Council) · **Design Thinking** (Stanford d.school, Hasso Plattner Institute of Design)
-- **Heuristic Evaluation** with Nielsen's 10 heuristics + **Severity 0–4** rating (NN/g)
-- **Cognitive Walkthrough** · **UX Maturity model** (NN/g)
-- **JTBD** (Christensen) · **Empathy / Journey / Service maps**
-- **Issue trees + MECE** · **Hypothesis-driven analysis** (known as McKinsey-style)
-- **Pyramid Principle / SCQA** (Barbara Minto) for answer-first communication
-- **HEART + North Star metrics** · **RICE / Impact-Effort** prioritization
-- **McKinsey 7-step** problem-solving as the spine
-
-Every method in [`references/ux-methods.md`](references/ux-methods.md) carries a **source link**, and the skill is instructed to read that file first, which reduces made-up frameworks. That file is useful as a standalone consulting-methods reference even if you never run the skill.
-
-### The DNA
-
-> **Think bottom-up, communicate top-down.** Analysis starts from data and users; every report leads with the recommendation (Pyramid Principle, answer-first).
-
-## How it works
-
-The skill compresses the McKinsey 7-step process into a 5-step UX flow, with human gates at steps 1 and 4:
-
-```text
-/ux-strategy <product, screen, or problem>
-   │
-   ├─ 1. Frame the problem + SCQA + success metrics        🚪 gate
-   ├─ 2. Structure it: issue tree, MECE funnel, Day-1 hypotheses
-   ├─ 3. Understand users: JTBD · empathy / journey maps · IA (card sort, tree test)
-   ├─ 4. Diagnose: heuristic eval (Nielsen 10 + severity 0–4) · cognitive walkthrough   🚪 gate
-   └─ 5. Prioritize (RICE / Impact-Effort) + answer-first recommendation + handoff
-```
-
-### Three modes
-
-| Mode | When | Output |
-|------|------|--------|
-| **Audit** | "review this existing screen" | heuristic report (problems + severity + fixes) |
-| **Strategy** | "what should we build, in what order" | UX strategy doc (vision · IA · journey · roadmap) |
-| **Full** | a new MVP, end to end | full Double Diamond, all 5 steps |
-
-## Skill + Agent (two surfaces)
-
-- **`SKILL.md`** — interactive, with gates; you ping-pong through the steps.
-- **`agents/ux-strategist.md`** — an isolated batch agent. Same methods, no gates; another workflow hands it a brief and it returns a full diagnosis in one shot (good for "run 3 UX lenses in parallel").
-
-## Installation
-
-**Recommended:**
+**Option A — via the [skills CLI](https://github.com/vercel-labs/skills):**
 
 ```bash
 npx skills add laymom/consulting-ux-strategy --skill ux-strategy
 ```
 
-**Manual — macOS / Linux:**
+This copies `SKILL.md` together with `references/` (the methods file the skill reads first). For Claude Code at project level it lands in `./.claude/skills/ux-strategy/`.
+
+**Option B — manual clone (user-level, all projects):**
+
+macOS / Linux:
 
 ```bash
 git clone https://github.com/laymom/consulting-ux-strategy.git ~/.claude/skills/ux-strategy
 ```
 
-**Manual — Windows (PowerShell):**
+Windows (PowerShell):
 
 ```powershell
 git clone https://github.com/laymom/consulting-ux-strategy.git "$HOME\.claude\skills\ux-strategy"
 ```
 
-**Optional batch agent (Claude Code only, manual copy):** copy `agents/ux-strategist.md` into `~/.claude/agents/`. `npx skills add` does not install it. The agent reads the skill files from `~/.claude/skills/ux-strategy/`, which is where the manual clone above puts them.
+**First run:** start a new Claude Code session and type `/ux-strategy` followed by your request.
 
-Start a new Claude Code session and type `/ux-strategy`. Tested in Claude Code only.
+**Optional batch agent (Claude Code only).** `agents/ux-strategist.md` runs the same methods without gates, for another workflow to call or to run several lenses in parallel. You don't need it for normal use, and neither install option above activates it. Install it separately:
 
-## Usage
+macOS / Linux:
 
-```text
-/ux-strategy our onboarding completion rate is low — diagnose and prioritize fixes
-/ux-strategy design the information architecture for a new habit-tracking app
+```bash
+mkdir -p ~/.claude/agents
+cp ~/.claude/skills/ux-strategy/agents/ux-strategist.md ~/.claude/agents/
 ```
 
-## Handoff
+Windows (PowerShell):
 
-This skill sits in the middle of a value chain. It receives from a PRD/spec step, and hands off to a visual-design step. For the **qualitative user-feedback** input (empathy/journey maps), it pairs well with a synthetic focus group:
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\agents" | Out-Null
+Copy-Item "$HOME\.claude\skills\ux-strategy\agents\ux-strategist.md" "$HOME\.claude\agents\"
+```
 
-→ [**synthetic-focus-group**](https://github.com/laymom/synthetic-focus-group) — run a qualitative focus group with synthetic personas, then feed the verbatim quotes into this skill's empathy/journey mapping.
+(If you installed with Option A, copy from `./.claude/skills/ux-strategy/agents/` instead.) The agent looks for the skill files at the path given in its brief, then `./.claude/skills/ux-strategy/`, then `~/.claude/skills/ux-strategy/`.
 
-## License
+## Copy-paste input example
 
-MIT — see [LICENSE](LICENSE).
+```text
+/ux-strategy Audit our signup flow (3 screens: email → password → profile).
+Users: first-time visitors from a mobile ad.
+Goal: more people finish signup.
+What I have: screenshots attached; no analytics or user research yet.
+Constraint: we can change copy and field order this sprint, not the backend.
+```
 
-## Credits
+The more of these you include (screens or flow, users, goal, available data, constraints), the fewer questions it asks. The report is written in the language of your input.
 
-Built by **Sophia in Korea — a non-engineer who ships agents anyway.** Methodologies are linked to the sources listed in `references/ux-methods.md`.
+## What happens
+
+It picks a mode from your brief and tells you which one and why:
+
+| Mode | When | You get |
+|---|---|---|
+| **Audit** | Existing screens, a prototype, or key flows | Issues for the main user tasks, each with where it was observed, the problem, expected impact, related principle, severity 0–4 with a reason, a fix, and how to validate it |
+| **Strategy** | IA, journeys, and priorities for a product or feature | A strategy doc: direction, information architecture, journey, priorities |
+| **Full** | Only when you ask for end-to-end work, such as a new MVP | All five steps below |
+
+The five steps, with two places where it stops for your OK:
+
+```text
+1. Frame the problem (SCQA) and agree on metrics or user tasks   [your OK]
+2. Structure it (issue tree, MECE, Day-1 hypotheses)
+3. Understand users (JTBD, empathy and journey maps, IA)
+4. Diagnose (Nielsen heuristics, severity 0–4, cognitive walkthrough)   [your OK]
+5. Prioritize, recommend (answer first), name the next validation, hand off
+```
+
+Each mode uses only the steps and methods that fit, and the report says why each method was chosen. A small screen check skips the North Star metric and the full issue tree.
+
+Every claim carries one evidence label: **User-provided fact**, **Sourced fact** (with link), **Real user research**, **AI assumption**, **Synthetic persona response**, **Approved decision**, or **Open question**.
+
+The skill produces strategy and diagnosis documents, not visual mockups. An HTML viewer for the report is available on request; that is a way to read the report, not a product screen design.
+
+## How it differs
+
+- **Findings are traceable.** Each issue records where it was observed, which principle it breaks, why it got its severity, and how to check it, so you can disagree with specific points.
+- **Observation is kept apart from inference.** A screen review is not behavior data, so the report doesn't claim drop-off causes or conversion lift from one. If only code was read, it says so instead of claiming a visual inspection.
+- **Methods are named and cited.** It uses consulting-style methods — Double Diamond (UK Design Council), Nielsen's heuristics and severity scale (NN/g), JTBD (Christensen), issue trees and MECE, the Pyramid Principle (Minto), HEART (Google), RICE (Intercom) — from [`references/ux-methods.md`](references/ux-methods.md). Links marked "secondary explainer" there are not from the original author.
+- **Priority matches the data.** With thin data it gives an evidence-based qualitative priority instead of a numeric ranking. RICE inputs that aren't real team numbers are marked as estimates.
+
+## Limits · cost · compatibility
+
+- **It does not replace real user research or a consultant.** Card sorts, tree tests, and usability tests are designed and recommended here; your team runs them with real users.
+- **One AI reviewer.** A heuristic evaluation normally uses 3–5 evaluators ([NN/g](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)); this is a single pass.
+- **Synthetic input stays synthetic.** Journey or empathy maps built from simulated persona responses are labeled "hypothetical (synthetic input)".
+- **Accessibility:** if it comments on accessibility, it states the scope and tool used. It is not a WCAG certification.
+- **Cost:** the skill runs in your current session. The optional agent runs as a separate subagent and uses additional tokens, more if you run several in parallel.
+- **Compatibility:** tested in Claude Code only. The skills CLI can install `SKILL.md` for other agents, but running it there is untested. The batch agent is Claude Code only.
+
+## Related tools
+
+Small, independent tools by the same author. Use any of them on its own; none requires the others.
+
+- [multi-agent-brainstorm](https://github.com/laymom/multi-agent-brainstorm) — explore and compare ideas from 5 perspectives
+- [synthetic-focus-group](https://github.com/laymom/synthetic-focus-group) — explore reactions and risky assumptions with simulated personas
+- [ai-prd-generator](https://github.com/laymom/ai-prd-generator) — turn an idea into a PRD with scope and acceptance criteria
+- [consulting-ux-strategy](https://github.com/laymom/consulting-ux-strategy) — audit flows, information architecture, and usability, then prioritize fixes
+
+When passing output between them, keep the evidence labels (User-provided fact, Sourced fact, Real user research, AI assumption, Synthetic persona response, Approved decision, Open question). Simulated persona responses stay labeled as synthetic in every downstream document.
+
+## Sources · license · changelog
+
+- Methods and sources: [`references/ux-methods.md`](references/ux-methods.md) (links checked 2026-10-12)
+- License: MIT — see [LICENSE](LICENSE)
+- Changes: [CHANGELOG.md](CHANGELOG.md)
+
+Repository layout:
+
+```text
+SKILL.md                    # the skill (/ux-strategy)
+references/ux-methods.md    # method definitions, scales, sources
+references/handoff-map.md   # what comes before and after this skill
+agents/ux-strategist.md     # optional batch agent (Claude Code only)
+```
+
+Built by **Sophia in Korea — a non-engineer who ships agents anyway.**
