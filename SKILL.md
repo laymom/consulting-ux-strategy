@@ -150,11 +150,12 @@ Use the scales in `ux-methods.md` exactly.
 
 Fix the report until every answer is "yes":
 
-1. Search the report for "conversion", "drop-off", "abandon", "killer", "costing", "likeliest", "will increase". Without real usage data, is every such claim rewritten as a hypothesis ("may contribute to …; validate with …"), with no ranking of drop-off causes?
-2. Is every evidence label exactly one of the 7 names? (No combinations such as "AI assumption + JTBD inference". Direct observations of the provided files are Sourced fact with file and line.)
-3. Does every Sourced fact link come from `references/ux-methods.md`, or point to the user's own provided file and line? No other URLs.
-4. Is every claim about industry norms, benchmarks, or "in <year>" sourced — or removed or labeled AI assumption?
-5. Where a method is applied (e.g. Pyramid Principle/SCQA in the recommendation), is its source link cited once there?
+1. Without real usage data, is every claim about drop-off, abandonment, conversion, or impact written as a hypothesis ("may contribute to …; validate with …")? Check what each sentence means; finding words isn't enough. Are there any rankings or superlatives about causes, such as "the single highest-impact", "the strongest contributor", or "the biggest"? Remove them.
+2. Is every User-provided fact, and everything the report says the team, user, or client "said", "flagged", "already knows", or "decided", traceable to a line the user actually wrote in this conversation? If not, relabel it as AI assumption or remove it.
+3. Is every evidence label exactly one of the 7 names? (No combinations such as "AI assumption + JTBD inference". Direct observations of the provided files are Sourced fact with file and line.)
+4. Does every Sourced fact link come from `references/ux-methods.md`, or point to the user's own provided file and line? No other URLs.
+5. Is every claim about industry norms, benchmarks, or "in <year>" sourced — or removed or labeled AI assumption?
+6. Where a method is applied (e.g. Pyramid Principle/SCQA in the recommendation), is its source link cited once there?
 
 ## Never
 

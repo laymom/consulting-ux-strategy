@@ -119,6 +119,8 @@ The skill produces strategy and diagnosis documents, not visual mockups. An HTML
 
 ## Limits · cost · compatibility
 
+- **The final check reduces but does not eliminate mistakes.** In a real run from a fresh install (see the example), the report still ranked likely causes, combined two labels once, and attributed to the team a statement they never made. Each is listed in the example's run notes. Read findings critically.
+
 - **It does not replace real user research or a consultant.** Card sorts, tree tests, and usability tests are designed and recommended here; your team runs them with real users.
 - **One AI reviewer.** A heuristic evaluation normally uses 3–5 evaluators ([NN/g](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)); this is a single pass.
 - **Synthetic input stays synthetic.** Journey or empathy maps built from simulated persona responses are labeled "hypothetical (synthetic input)".

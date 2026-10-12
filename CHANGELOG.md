@@ -19,6 +19,7 @@
 - Wording: "consulting-grade" and "the methods consulting firms use" replaced with "consulting-style methods"; the claim that every method has a primary source was removed; author-specific tone instructions replaced with neutral wording
 
 ### Fixed (found in a real run)
+- Final check now traces every user-attributed statement to the conversation and bans superlative cause rankings (the second real run attributed a statement to the team that they never made). README Limits note the remaining risk
 - Gates: an unanswered gate (non-interactive session, a question tool returning nothing) now stops with a statement of the approval needed; the skill no longer "proceeds with the default". A gate the brief already answers is stated as an assumption and still stops once, unless the user explicitly asked to run without stopping (then every unapproved choice is labeled AI assumption)
 - User tasks the skill defines itself (e.g. T1–T4) are AI assumptions until approved at GATE 1
 - Evidence labels: exactly one of the 7 names per claim (no combinations such as "AI assumption + JTBD inference"); direct observations of the user's provided files are Sourced fact, cited with file and line
