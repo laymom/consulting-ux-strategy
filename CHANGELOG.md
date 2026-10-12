@@ -9,6 +9,7 @@
 - Observation-vs-inference rules: no drop-off causes or conversion lift claimed from a screen review; no visual-inspection claim when only code was read; accessibility comments state scope and tool and never imply WCAG certification; maps built from synthetic input are labeled "hypothetical (synthetic input)"
 - A "next validation" step for top recommendations
 - `CHANGELOG.md`
+- `examples/signup-audit.md`: a real Claude Code run on a mock signup page (`examples/signup-mock.html`), with the conversation and report unedited and run notes on how it was made
 
 ### Changed
 - `SKILL.md`, `agents/ux-strategist.md`, `references/handoff-map.md`, and `references/ux-methods.md` are now in English; reports follow the language of the user's input. No method, step, scale, or source link was removed

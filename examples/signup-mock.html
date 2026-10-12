@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tally — Create your account</title>
+<!-- Fictional mock made for a UX audit example. Not a real product. -->
+<style>
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background: #f4f5f7; color: #222; }
+  .card { max-width: 380px; margin: 48px auto; background: #fff; border-radius: 12px; padding: 32px 28px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .logo { font-weight: 700; font-size: 22px; color: #3b6cf6; margin-bottom: 20px; }
+  h1 { font-size: 20px; margin: 0 0 18px; }
+  label { display: block; font-size: 13px; margin: 14px 0 6px; }
+  input { width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+  input::placeholder { color: #c8c8c8; }
+  .btn { width: 100%; margin-top: 22px; padding: 13px; border: 0; border-radius: 8px; background: #3b6cf6; color: #fff; font-size: 16px; cursor: pointer; }
+  .error { color: #d93025; font-size: 12px; margin-top: 8px; display: none; }
+  .skip { display: block; text-align: right; margin-top: 10px; font-size: 11px; color: #bbb; text-decoration: none; }
+  .step { display: none; }
+  .step.active { display: block; }
+  .perm-icon { font-size: 40px; text-align: center; margin: 8px 0 12px; }
+  .muted { color: #666; font-size: 14px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">Tally</div>
+
+  <!-- STEP 1: account -->
+  <form class="step active" id="step1" novalidate>
+    <h1>Create your account</h1>
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@example.com">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" placeholder="Password">
+    <div class="error" id="pwError"></div>
+    <button class="btn" type="submit">Continue</button>
+  </form>
+
+  <!-- STEP 2: profile -->
+  <form class="step" id="step2" novalidate>
+    <h1>Tell us about you</h1>
+    <label for="phone">Phone number</label>
+    <input id="phone" type="tel" placeholder="Phone number">
+    <label for="bday">Birthday</label>
+    <input id="bday" type="text" placeholder="MM/DD/YYYY">
+    <div class="error" id="profileError"></div>
+    <button class="btn" type="submit">Continue</button>
+  </form>
+
+  <!-- STEP 3: notifications -->
+  <div class="step" id="step3">
+    <div class="perm-icon">🔔</div>
+    <h1>Turn on notifications</h1>
+    <p class="muted">Allow Tally to send you notifications.</p>
+    <button class="btn" id="allowBtn" type="button">Allow notifications</button>
+    <a href="#" class="skip" id="skipLink">Skip</a>
+  </div>
+
+  <!-- DONE -->
+  <div class="step" id="done">
+    <h1>You're all set!</h1>
+    <p class="muted">Welcome to Tally. Your dashboard is empty — add a habit to get started.</p>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.step').forEach(function (s) { s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+  }
+
+  document.getElementById('step1').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    var pw = document.getElementById('pw').value;
+    var err = document.getElementById('pwError');
+    if (!email || email.indexOf('@') < 0) {
+      err.textContent = 'Please enter a valid email.';
+      err.style.display = 'block';
+      return;
+    }
+    var ok = pw.length >= 10 && /[A-Z]/.test(pw) && /[0-9]/.test(pw) && /[^A-Za-z0-9]/.test(pw);
+    if (!ok) {
+      err.textContent = 'Password must be at least 10 characters and include an uppercase letter, a number, and a symbol.';
+      err.style.display = 'block';
+      document.getElementById('pw').value = '';
+      return;
+    }
+    err.style.display = 'none';
+    show('step2');
+  });
+
+  document.getElementById('step2').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var phone = document.getElementById('phone').value.trim();
+    var bday = document.getElementById('bday').value.trim();
+    var err = document.getElementById('profileError');
+    if (!phone || !bday) {
+      err.textContent = 'All fields are required.';
+      err.style.display = 'block';
+      return;
+    }
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(bday)) {
+      err.textContent = 'ERR_422: DOB field failed schema validation.';
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    show('step3');
+  });
+
+  function finish() { show('done'); }
+  document.getElementById('allowBtn').addEventListener('click', function () {
+    if ('Notification' in window) { Notification.requestPermission().then(finish, finish); } else { finish(); }
+  });
+  document.getElementById('skipLink').addEventListener('click', function (e) { e.preventDefault(); finish(); });
+</script>
+</body>
+</html>

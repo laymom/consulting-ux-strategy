@@ -4,7 +4,28 @@
 
 ## Example
 
-<!-- EXAMPLE: filled in phase 2 -->
+Excerpt from an audit of a 3-step signup mock (fields quoted from the report, shortened to fit):
+
+```text
+Mode: Audit (you asked to review one existing flow).
+Scope reviewed: signup-mock.html — DOM and inline JS. I did not open the file in a browser.
+
+F1 — Password field is wiped on validation failure · Severity 4
+  Where observed:  step 1, submit handler at lines 83–89. Inspected: inline JS.
+  Severity reason: a hard mechanical punishment on a step 100% of users must pass,
+                   with no in-product way to recover gracefully.
+  How to validate: instrument step-1 submit attempts vs. successful transitions;
+                   moderated test with 5 users on mobile, measure retries.
+  Evidence label:  AI assumption (code-based)
+
+F6 — Notification "Skip" link is styled as a dark pattern · Severity 3
+  Where observed:  step 3, line 18 CSS: .skip is 11px, color #bbb.
+  How to validate: compare Allow rates before/after; quick accessibility pass on contrast.
+  Evidence label:  AI assumption (code-based). Contrast claim: manual check of CSS
+                   color values, not a WCAG certification.
+```
+
+Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (user answers role-played by an AI; see run notes).
 
 ## Install
 
@@ -128,6 +149,7 @@ SKILL.md                    # the skill (/ux-strategy)
 references/ux-methods.md    # method definitions, scales, sources
 references/handoff-map.md   # what comes before and after this skill
 agents/ux-strategist.md     # optional batch agent (Claude Code only)
+examples/                   # a real run: mock page + conversation + report
 ```
 
 Built by **Sophia in Korea — a non-engineer who ships agents anyway.**
