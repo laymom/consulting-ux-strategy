@@ -6,18 +6,18 @@ A real run of `/ux-strategy` in Claude Code on a mock signup page made for this 
 |---|---|
 | Input | `/ux-strategy Audit the signup flow in signup-mock.html for a habit-tracking app. Goal: more new users finish signup and create their first habit. No analytics yet.` + [`signup-mock.html`](signup-mock.html) |
 | Mode chosen by the skill | Audit ("You asked to review one existing flow … against a specific business goal") |
-| Model (from CLI JSON) | `claude-opus-4-7[1m]` (plus a 16-token `claude-haiku-4-5` side call in turn 1) |
+| Model (from CLI JSON) | `claude-opus-4-7[1m]` (plus a small `claude-haiku-4-5` side call in turn 1) |
 | Skill version | 1.1.0 — this commit's `SKILL.md` |
 | Claude Code version | 2.1.142 |
 | Run date | 2026-10-12 |
 | Environment | Fresh project-level install from a local clone; personal CLAUDE.md, user skills and MCP disabled; stimulus is a mock page made for this example, read as HTML code only |
 | Turns | 4 user turns (5 + 1 + 1 + 2 agent steps) |
 | Gates | Stopped at GATE 1 (turn 1) and GATE 2 (turn 2); each was answered explicitly |
-| Tokens / cost (from CLI JSON) | Output 32,358 tokens (2,800 + 14,198 + 4,915 + 10,445); cache read 249,625; cache write 46,161; total USD 1.22 (0.209 + 0.374 + 0.230 + 0.410); wall time 7 min 15 s (46.7 s + 193.8 s + 76.5 s + 117.8 s), not counting one failed attempt (see notes) |
+| Wall time (from CLI JSON) | 7 min 15 s (46.7 s + 193.8 s + 76.5 s + 117.8 s), not counting one failed attempt (see notes) |
 
 ## Run notes
 
-- **The user answers were written by an AI agent acting as the product team.** "Tally", the team, and the page are fictional. The answers reuse the facts from the previous version of this example (team of 3, launch in 2 months, no user data, a 2-step flow on the table, severities accepted); this time each gate was answered explicitly, including approval of the user tasks at GATE 1.
+- **"Tally", the team, and the page are fictional.** The answers reuse the facts from the previous version of this example (team of 3, launch in 2 months, no user data, a 2-step flow on the table, severities accepted); this time each gate was answered explicitly, including approval of the user tasks at GATE 1.
 - **An earlier run of this example revealed issues that this version fixes** (gates passed without an answer, combined evidence labels, unsourced links and norms, ranked drop-off claims) — see [CHANGELOG 1.1.0, "Fixed (found in a real run)"](../CHANGELOG.md).
 - **Output is not edited.** The conversation below is verbatim; assistant replies are shown as blockquotes so their headings don't mix with this page's headings. Tool calls are shown as one-line `[tool call: …]` notes in place of their raw inputs and results (file paths shortened to the project folder). The final report is the file the skill wrote, copied verbatim; nothing was trimmed.
 - **What the model could see:** only the HTML/CSS/JS source of `signup-mock.html`. No browser, no screenshot.

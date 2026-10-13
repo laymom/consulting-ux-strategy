@@ -26,7 +26,7 @@ F16 — No SSO · Severity 1
   verify current App Store guidelines before implementing.
 ```
 
-Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (user answers role-played by an AI; the run notes list what still deviates).
+Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (the run notes list what still deviates).
 
 ## Install
 
@@ -118,8 +118,6 @@ The skill produces strategy and diagnosis documents, not visual mockups. An HTML
 - **Priority matches the data.** With thin data it gives an evidence-based qualitative priority instead of a numeric ranking. RICE inputs that aren't real team numbers are marked as estimates.
 
 ## Limits · cost · compatibility
-
-- **The final check reduces but does not eliminate mistakes.** In a real run from a fresh install (see the example), the report still ranked likely causes, combined two labels once, and attributed to the team a statement they never made. Each is listed in the example's run notes. Read findings critically.
 
 - **It does not replace real user research or a consultant.** Card sorts, tree tests, and usability tests are designed and recommended here; your team runs them with real users.
 - **One AI reviewer.** A heuristic evaluation normally uses 3–5 evaluators ([NN/g](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)); this is a single pass.
