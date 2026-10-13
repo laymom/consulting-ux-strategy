@@ -1,32 +1,38 @@
-# /ux-strategy — UX Audit and Strategy for Claude Code
+# /ux-strategy — what to fix first in the screen you built
 
-**For product managers, designers, and founders: get a UX audit or strategy report in which every finding is tied to evidence, a severity, a priority, and the next test that would confirm it.**
+**You built a screen or a flow (for example with Claude Code) and aren't sure it's easy to use. Give it the screenshots; get the 3 things to fix now, why, and fix instructions you can paste back into Claude Code.**
 
 ## Example
 
-Excerpt from an audit of a 3-step signup mock (quoted from the run, shortened to fit):
+Input: three screenshots of a mock signup flow for a habit-tracking app, and *"What should I fix first?"*
+
+| Step 1 | Step 2 | Step 3 |
+|---|---|---|
+| [<img src="examples/signup-step1.png" width="130" alt="Step 1: Create your account — email and password">](examples/signup-step1.png) | [<img src="examples/signup-step2.png" width="130" alt="Step 2: Tell us about you — phone number and birthday">](examples/signup-step2.png) | [<img src="examples/signup-step3.png" width="130" alt="Step 3: Turn on notifications — Allow button and a small Skip link">](examples/signup-step3.png) |
+
+Output (quoted from the run, shortened to fit):
 
 ```text
-Mode: Audit — Steps 1 → 4 → 5.
-Reviewer caveat: one AI reviewer reading the DOM/JS of signup-mock.html only —
-  no rendered page, no accessibility tooling, no real users.
+1. Step 2 (Tell us about you) — Phone number asked before the user has seen any
+   product value, with no reason given.        Nielsen H2 + H10 · Severity 4
+2. Step 3 (Turn on notifications) — Permission asked before any habit or
+   reminder exists.                            Nielsen H1 + H10 · Severity 4
+   Fix instruction for Claude Code:
+   > Delete the standalone "Turn on notifications" step from signup. After the user
+   > creates their first habit and picks a reminder time, show the native OS
+   > permission prompt from that screen, preceded by one line: `Allow notifications
+   > so Tally can remind you at <reminder time> to <habit name>.` Keep a `Not now`
+   > option that leaves the habit saved without reminders.
+   > Check: A new user can finish signup without seeing a notification prompt; the
+   > prompt only appears after they save a habit with a reminder.
+3. All 3 screens — No progress indicator, so the user doesn't know how many steps
+   are left.                                   Nielsen H1 · Severity 3
 
-GATE 1 — please confirm before I run the heuristic pass   (it stopped and waited)
-
-F1 — Password field wiped on validation failure · Severity 4
-  Where:            signup-mock.html:87 — document.getElementById('pw').value = '';
-  Expected impact:  Perceived hostility at the first interaction. May contribute
-                    to T1 attrition; validate.
-  How to validate:  5-user think-aloud pre-launch (count attempts to pass Step 1);
-                    post-launch, log Step 1 attempt counts.
-  Evidence:         Sourced fact (code); expected impact AI assumption.
-
-F16 — No SSO · Severity 1
-  Apple's App Store rules may require Sign-in-with-Apple alongside; AI assumption,
-  verify current App Store guidelines before implementing.
+Next: validate with 5 people who have never used Tally, thinking aloud.
+Want the full audit or a strategy? Say "Audit" or "Strategy".
 ```
 
-Full conversation and report: [examples/signup-audit.md](examples/signup-audit.md). Real run in Claude Code on a mock page (the run notes list what still deviates).
+Full answer, run settings, and a side-by-side with plain chat on the same screenshots: [examples/signup-audit.md](examples/signup-audit.md). The app and page are fictional mocks.
 
 ## Install
 
@@ -52,9 +58,68 @@ Windows (PowerShell):
 git clone https://github.com/laymom/consulting-ux-strategy.git "$HOME\.claude\skills\ux-strategy"
 ```
 
-**First run:** start a new Claude Code session and type `/ux-strategy` followed by your request.
+**First run:** start a new Claude Code session, save screenshots of your screen in the project folder, and type `/ux-strategy` with your question.
 
-**Optional batch agent (Claude Code only).** `agents/ux-strategist.md` runs the same methods without gates, for another workflow to call or to run several lenses in parallel. You don't need it for normal use, and neither install option above activates it. Install it separately:
+## Copy-paste input
+
+```text
+/ux-strategy I built this checkout flow (screenshots: cart.png, address.png, pay.png).
+What should I fix first?
+```
+
+Screenshots work best. Code alone also works, but then it says it read only the code and makes no claims about how the screen looks. Mentioning who uses the screen and what they're trying to do sharpens the result; without it, the skill states the task it assumed. The answer is written in the language of your input.
+
+## What you get (Quick fix, the default)
+
+- **Top 3 fixes, on one screen.** Each says where (screen and element), what goes wrong for the user, why (the usability heuristic it breaks, severity 0–4 with a reason, a source link), and an evidence label.
+- **A fix instruction for Claude Code** per problem: the concrete change, new wording where wording is the fix, and a check for when it's done. The three fixes are written to work together.
+- **The problems a code review won't catch** come first: the next action isn't visible, a choice's meaning is unclear, information is asked for at the wrong moment, there's no feedback or sense of progress, wording users won't understand, errors that punish the user.
+- **One cheapest way to validate** the fixes (e.g. 5 people trying the task while thinking aloud).
+
+It doesn't ask questions first and doesn't edit your code; it reports, and you decide what to paste.
+
+## Want more depth?
+
+Ask for it by name ("Audit", "Strategy") or describe the job:
+
+| Mode | When | You get |
+|---|---|---|
+| **Quick fix** (default) | You give a screen or flow and ask what to fix | Top 3 fixes with fix instructions |
+| **Audit** | You want every issue on existing screens or key flows | Full issue list: where observed, problem, expected impact, principle, severity with reason, fix, how to validate; a cognitive walkthrough; priorities |
+| **Strategy** | You're deciding IA, journeys, and priorities for a product or feature | A strategy doc: direction, information architecture, journey, priorities |
+| **Full** | You ask for end-to-end work, such as a new MVP | All five steps below |
+
+Audit, Strategy, and Full stop twice for your OK:
+
+```text
+1. Frame the problem (SCQA) and agree on metrics or user tasks   [your OK]
+2. Structure it (issue tree, MECE, Day-1 hypotheses)
+3. Understand users (JTBD, empathy and journey maps, IA)
+4. Diagnose (Nielsen heuristics, severity 0–4, cognitive walkthrough)   [your OK]
+5. Prioritize, recommend (answer first), name the next validation, hand off
+```
+
+Example of a full Audit-mode run (with both stops): [examples/signup-audit-full.md](examples/signup-audit-full.md).
+
+## How it differs from asking in plain chat
+
+Measured on the same three screenshots, once with the skill and once without ([comparison](examples/signup-audit.md#compared-with-plain-chat-same-screenshots-no-skill)):
+
+- **Both** found the same top two problems. Plain chat was shorter and named a trade-off the skill didn't.
+- **Only the skill** gave paste-ready fix instructions with exact wording and a done-check, kept the three fixes consistent with each other, raised a third problem (no progress indicator), and tied each problem to a heuristic, a severity with a reason, and a source.
+- **Claims stay claims.** A screen review isn't behavior data, so the skill is told not to state drop-off or conversion effects as facts, and every claim carries one evidence label: **User-provided fact**, **Sourced fact**, **Real user research**, **AI assumption**, **Synthetic persona response**, **Approved decision**, or **Open question**.
+
+## Limits · compatibility
+
+- **It does not replace testing with real users.** It recommends tests; your team runs them.
+- **One AI reviewer.** A heuristic evaluation normally uses 3–5 evaluators ([NN/g](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)); this is a single pass, and severity is a judgment.
+- **It sees what you give it.** Screenshots don't show error messages, validation rules, or later screens unless you include them; code doesn't show how the screen looks.
+- **Synthetic input stays synthetic.** Maps built from simulated persona responses are labeled "hypothetical (synthetic input)".
+- **Accessibility:** if it comments on accessibility, it states the scope and tool used. It is not a WCAG certification.
+- **No mockups.** It produces findings, fix instructions, and documents, not visual designs.
+- **Compatibility:** tested in Claude Code only. The skills CLI can install `SKILL.md` for other agents, but running it there is untested.
+
+**Optional batch agent (Claude Code only).** `agents/ux-strategist.md` runs the same modes without stopping, for another workflow to call or to run several lenses in parallel. It runs as a separate subagent, so it uses more of your usage. You don't need it for normal use, and neither install option activates it:
 
 macOS / Linux:
 
@@ -72,60 +137,6 @@ Copy-Item "$HOME\.claude\skills\ux-strategy\agents\ux-strategist.md" "$HOME\.cla
 
 (If you installed with Option A, copy from `./.claude/skills/ux-strategy/agents/` instead.) The agent looks for the skill files at the path given in its brief, then `./.claude/skills/ux-strategy/`, then `~/.claude/skills/ux-strategy/`.
 
-## Copy-paste input example
-
-```text
-/ux-strategy Audit our signup flow (3 screens: email → password → profile).
-Users: first-time visitors from a mobile ad.
-Goal: more people finish signup.
-What I have: screenshots attached; no analytics or user research yet.
-Constraint: we can change copy and field order this sprint, not the backend.
-```
-
-The more of these you include (screens or flow, users, goal, available data, constraints), the fewer questions it asks. The report is written in the language of your input.
-
-## What happens
-
-It picks a mode from your brief and tells you which one and why:
-
-| Mode | When | You get |
-|---|---|---|
-| **Audit** | Existing screens, a prototype, or key flows | Issues for the main user tasks, each with where it was observed, the problem, expected impact, related principle, severity 0–4 with a reason, a fix, and how to validate it |
-| **Strategy** | IA, journeys, and priorities for a product or feature | A strategy doc: direction, information architecture, journey, priorities |
-| **Full** | Only when you ask for end-to-end work, such as a new MVP | All five steps below |
-
-The five steps, with two places where it stops for your OK:
-
-```text
-1. Frame the problem (SCQA) and agree on metrics or user tasks   [your OK]
-2. Structure it (issue tree, MECE, Day-1 hypotheses)
-3. Understand users (JTBD, empathy and journey maps, IA)
-4. Diagnose (Nielsen heuristics, severity 0–4, cognitive walkthrough)   [your OK]
-5. Prioritize, recommend (answer first), name the next validation, hand off
-```
-
-Each mode uses only the steps and methods that fit, and the report says why each method was chosen. A small screen check skips the North Star metric and the full issue tree.
-
-Every claim carries one evidence label: **User-provided fact**, **Sourced fact** (with link), **Real user research**, **AI assumption**, **Synthetic persona response**, **Approved decision**, or **Open question**.
-
-The skill produces strategy and diagnosis documents, not visual mockups. An HTML viewer for the report is available on request; that is a way to read the report, not a product screen design.
-
-## How it differs
-
-- **Findings are traceable.** Each issue records where it was observed, which principle it breaks, why it got its severity, and how to check it, so you can disagree with specific points.
-- **Observation is kept apart from inference.** A screen review is not behavior data, so the report doesn't claim drop-off causes or conversion lift from one. If only code was read, it says so instead of claiming a visual inspection.
-- **Methods are named and cited.** It uses consulting-style methods — Double Diamond (UK Design Council), Nielsen's heuristics and severity scale (NN/g), JTBD (Christensen), issue trees and MECE, the Pyramid Principle (Minto), HEART (Google), RICE (Intercom) — from [`references/ux-methods.md`](references/ux-methods.md). Links marked "secondary explainer" there are not from the original author.
-- **Priority matches the data.** With thin data it gives an evidence-based qualitative priority instead of a numeric ranking. RICE inputs that aren't real team numbers are marked as estimates.
-
-## Limits · cost · compatibility
-
-- **It does not replace real user research or a consultant.** Card sorts, tree tests, and usability tests are designed and recommended here; your team runs them with real users.
-- **One AI reviewer.** A heuristic evaluation normally uses 3–5 evaluators ([NN/g](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)); this is a single pass.
-- **Synthetic input stays synthetic.** Journey or empathy maps built from simulated persona responses are labeled "hypothetical (synthetic input)".
-- **Accessibility:** if it comments on accessibility, it states the scope and tool used. It is not a WCAG certification.
-- **Cost:** the skill runs in your current session. The optional agent runs as a separate subagent and uses additional tokens, more if you run several in parallel.
-- **Compatibility:** tested in Claude Code only. The skills CLI can install `SKILL.md` for other agents, but running it there is untested. The batch agent is Claude Code only.
-
 ## Related tools
 
 Small, independent tools by the same author. Use any of them on its own; none requires the others.
@@ -133,13 +144,13 @@ Small, independent tools by the same author. Use any of them on its own; none re
 - [multi-agent-brainstorm](https://github.com/laymom/multi-agent-brainstorm) — explore and compare ideas from 5 perspectives
 - [synthetic-focus-group](https://github.com/laymom/synthetic-focus-group) — explore reactions and risky assumptions with simulated personas
 - [ai-prd-generator](https://github.com/laymom/ai-prd-generator) — turn an idea into a PRD with scope and acceptance criteria
-- [consulting-ux-strategy](https://github.com/laymom/consulting-ux-strategy) — audit flows, information architecture, and usability, then prioritize fixes
+- [consulting-ux-strategy](https://github.com/laymom/consulting-ux-strategy) — find what to fix first in a screen you built, or run a full UX audit or strategy
 
-When passing output between them, keep the evidence labels (User-provided fact, Sourced fact, Real user research, AI assumption, Synthetic persona response, Approved decision, Open question). Simulated persona responses stay labeled as synthetic in every downstream document.
+When passing output between them, keep the evidence labels. Simulated persona responses stay labeled as synthetic in every downstream document.
 
-## Sources · license · changelog
+## Methods · sources · license · changelog
 
-- Methods and sources: [`references/ux-methods.md`](references/ux-methods.md) (links checked 2026-10-12)
+- Methods: Nielsen's heuristics and severity scale and the cognitive walkthrough (NN/g), Double Diamond (UK Design Council), JTBD (Christensen), issue trees and MECE, the Pyramid Principle (Minto), HEART (Google), RICE (Intercom). Definitions and links: [`references/ux-methods.md`](references/ux-methods.md) (links checked 2026-10-12; links marked "secondary explainer" are not from the original author)
 - License: MIT — see [LICENSE](LICENSE)
 - Changes: [CHANGELOG.md](CHANGELOG.md)
 
@@ -150,7 +161,7 @@ SKILL.md                    # the skill (/ux-strategy)
 references/ux-methods.md    # method definitions, scales, sources
 references/handoff-map.md   # what comes before and after this skill
 agents/ux-strategist.md     # optional batch agent (Claude Code only)
-examples/                   # a real run: mock page + conversation + report
+examples/                   # real runs: screenshots, Quick fix, plain-chat baseline, full Audit
 ```
 
 Built by **Sophia in Korea — a non-engineer who ships agents anyway.**

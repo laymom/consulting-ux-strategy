@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.0 — 2026-10-13
+
+### Added
+- **Quick fix mode (new default).** Give it a screen or flow you built (screenshots preferred, code also works) and ask what to fix: you get the top 3 fixes on one screen, each with where it is, what goes wrong for the user, why (heuristic, severity 0–4 with a reason, source link, evidence label), and a fix instruction you can paste back into Claude Code, with a check for when it's done. Then one cheapest validation step and an offer to go deeper (Audit / Strategy)
+- Quick fix looks first for problems a code review would not catch: next action not visible, unclear choices, information asked or given at the wrong time, missing feedback or progress, wording users won't understand, errors that punish the user
+- Quick fix runs without gates because it only reports; anything assumed is labeled AI assumption, and it never invents what the user or their team said. With code only, it says so and makes no claims about how the screen looks
+- Final check item 7 for Quick fix: at most 3 fixes; each instruction is concrete enough to paste (element, change, new wording, check)
+- `examples/signup-step1.png`–`signup-step3.png`: rendered screenshots (390×844) of the mock signup flow
+- `examples/signup-baseline-plain-chat.md`: the same screenshots and question in plain Claude Code without the skill, for comparison
+
+### Changed
+- Positioning: from "UX audit and strategy reports" to "find what to fix first in a screen you built"; the skill description, intro, and README top were rewritten around that use. Audit, Strategy, and Full modes are unchanged and are now the deeper options
+- The Final check now applies to every mode and asks to re-read the actual output, not check from memory
+- `examples/signup-audit.md` is now a Quick fix run on the three screenshots; the previous Audit-mode run moved to `examples/signup-audit-full.md`
+- The batch agent lists Quick fix among its modes
+- README: use scene, Quick fix example, and install come first; methods and sources moved lower
+
 ## 1.1.0 — 2026-10-12
 
 ### Added
