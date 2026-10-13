@@ -9,6 +9,8 @@
 - Final check item 7 for Quick fix: at most 3 fixes; each instruction is concrete enough to paste (element, change, new wording, check)
 - `examples/signup-step1.png`–`signup-step3.png`: rendered screenshots (390×844) of the mock signup flow
 - `examples/signup-baseline-plain-chat.md`: the same screenshots and question in plain Claude Code without the skill, for comparison
+- `examples/strategy-tally.md`: a real Strategy-mode run (fictional habit app "Tally", product brief only, no screens) with the conversation and the saved strategy document verbatim — framing, issue tree, JTBD, hypothetical first-week journey map, information architecture with a card-sort/tree-test plan, priorities, and next validation steps
+- README: one line under the Quick fix example on how the 3 fixes are chosen (Nielsen heuristic evaluation, severity 0–4, the user's main task), and short real excerpts of Audit and Strategy output under "Want more depth?"
 
 ### Changed
 - Positioning: from "UX audit and strategy reports" to "find what to fix first in a screen you built"; the skill description, intro, and README top were rewritten around that use. Audit, Strategy, and Full modes are unchanged and are now the deeper options
@@ -16,6 +18,8 @@
 - `examples/signup-audit.md` is now a Quick fix run on the three screenshots; the previous Audit-mode run moved to `examples/signup-audit-full.md`
 - The batch agent lists Quick fix among its modes
 - README: use scene, Quick fix example, and install come first; methods and sources moved lower
+- README title and first sentence name it as a UX audit (Nielsen heuristic evaluation, severity 0–4) so the UX method behind Quick fix is visible; Quick fix stays the default
+- Final check: if a file was saved, it is re-opened with Read and fixed with Edit before the check is reported; superlatives about which screen or moment decides the outcome are removed even when labeled AI assumption; statements about what the target users did, felt, or said in the past need the user's own words or become hypotheses; hypothetical journey and empathy map thoughts are written as paraphrase, not quotes; participant counts and success thresholds in test plans need a source or are labeled AI assumption (found in a Strategy-mode run)
 
 ## 1.1.0 — 2026-10-12
 

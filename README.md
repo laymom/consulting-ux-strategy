@@ -1,6 +1,6 @@
-# /ux-strategy — what to fix first in the screen you built
+# /ux-strategy — UX audit for the screen you built: what to fix first
 
-**You built a screen or a flow (for example with Claude Code) and aren't sure it's easy to use. Give it the screenshots; get the 3 things to fix now, why, and fix instructions you can paste back into Claude Code.**
+**When you've built a screen or flow (for example with Claude Code) and aren't sure it's easy to use, give it the screenshots and get the 3 fixes chosen by a UX audit (Nielsen heuristic evaluation with severity 0–4, checked against the user's main task), why each matters, and fix instructions you can paste back into Claude Code. Ask for more and you get the full audit or a UX strategy: information architecture, user journeys, and priorities.**
 
 ## Example
 
@@ -31,6 +31,8 @@ Output (quoted from the run, shortened to fit):
 Next: validate with 5 people who have never used Tally, thinking aloud.
 Want the full audit or a strategy? Say "Audit" or "Strategy".
 ```
+
+**How the 3 were chosen:** a heuristic evaluation against Nielsen's 10 usability heuristics, each problem rated on the NN/g severity scale (0–4) by how much it blocks the user's main task, then ordered by severity and by how early it appears in the flow. Method definitions and sources: [`references/ux-methods.md`](references/ux-methods.md).
 
 Full answer, run settings, and a side-by-side with plain chat on the same screenshots: [examples/signup-audit.md](examples/signup-audit.md). The app and page are fictional mocks.
 
@@ -89,7 +91,7 @@ Ask for it by name ("Audit", "Strategy") or describe the job:
 | **Strategy** | You're deciding IA, journeys, and priorities for a product or feature | A strategy doc: direction, information architecture, journey, priorities |
 | **Full** | You ask for end-to-end work, such as a new MVP | All five steps below |
 
-Audit, Strategy, and Full stop twice for your OK:
+Audit and Full stop twice for your OK; Strategy usually skips step 4, so it stops once:
 
 ```text
 1. Frame the problem (SCQA) and agree on metrics or user tasks   [your OK]
@@ -99,7 +101,33 @@ Audit, Strategy, and Full stop twice for your OK:
 5. Prioritize, recommend (answer first), name the next validation, hand off
 ```
 
-Example of a full Audit-mode run (with both stops): [examples/signup-audit-full.md](examples/signup-audit-full.md).
+**Audit** — from a full run on the same signup mock (quoted, shortened with …):
+
+> **F1 — Password field wiped on validation failure (Severity 4)**
+> - Where: `signup-mock.html:87` — `document.getElementById('pw').value = '';` runs on any password rule miss. Inspected via DOM/JS.
+> - Task: T1. Problem: User's first attempt fails a strict rule (≥10 chars, uppercase, digit, symbol) and the field is emptied; they must retype from scratch. …
+> - Expected impact: Perceived hostility at the first interaction; mobile users typing on soft keyboards hit hardest. May contribute to T1 attrition; validate.
+> - Principle: H5 Error prevention, H9 Error recovery — https://www.nngroup.com/articles/ten-usability-heuristics/
+> - Severity reason: Blocks the first task for likely most users, high persistence, trivially avoidable.
+> - Fix: Preserve the input, show a show/hide toggle, and surface rules on focus (fixes F2 at the same time) with a live checklist.
+> - How to validate: 5-user think-aloud pre-launch (count attempts to pass Step 1); post-launch, log Step 1 attempt counts.
+
+That is one of 16 findings; the run also has a cognitive walkthrough, an Impact/Effort 2x2, and a validation plan: [examples/signup-audit-full.md](examples/signup-audit-full.md).
+
+**Strategy** — from a run on a product brief for a fictional habit app, with no screens yet (quoted, shortened with …):
+
+> **Lead sentence:** *Tally should win Day-7 retention by making the first log unavoidably easy, re-surfacing exactly once a day on the user's terms, and treating a missed day as nothing — and should ship nothing in v1 that fights those three.*
+> …
+> ```text
+> Tally
+> ├── Today            ← default surface on open; today's habit(s), log control, yesterday-editable strip
+> ├── Habits           ← list, add/edit, pause (max 3 in v1)
+> └── Me               ← reminder time, notifications on/off, data export, account
+> ```
+> …
+> Day 4 (illustrative miss) and day 0 (the first ask) are plausible low points in this hypothetical journey; they are where B1 and B3 intervene. Validate with real users. [AI assumption]
+
+The full document also has the SCQA framing, an issue tree, JTBD, the hypothetical first-week journey map, an IA validation plan (card sort, tree test), and a 2-month plan: [examples/strategy-tally.md](examples/strategy-tally.md).
 
 ## How it differs from asking in plain chat
 
@@ -161,7 +189,7 @@ SKILL.md                    # the skill (/ux-strategy)
 references/ux-methods.md    # method definitions, scales, sources
 references/handoff-map.md   # what comes before and after this skill
 agents/ux-strategist.md     # optional batch agent (Claude Code only)
-examples/                   # real runs: screenshots, Quick fix, plain-chat baseline, full Audit
+examples/                   # real runs: screenshots, Quick fix, plain-chat baseline, full Audit, Strategy
 ```
 
 Built by **Sophia in Korea — a non-engineer who ships agents anyway.**

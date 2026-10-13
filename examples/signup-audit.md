@@ -8,7 +8,7 @@ A real run of `/ux-strategy` in Claude Code on three screenshots of a mock signu
 | Screenshots | [signup-step1.png](signup-step1.png), [signup-step2.png](signup-step2.png), [signup-step3.png](signup-step3.png) — rendered from [signup-mock.html](signup-mock.html) |
 | Mode chosen by the skill | Quick fix (the default when a screen is given and no depth is asked for) |
 | Model (from CLI JSON) | `claude-opus-4-7[1m]` (plus a small `claude-haiku-4-5` side call) |
-| Skill version | 1.2.0 — this commit's `SKILL.md` |
+| Skill version | 1.2.0 — `SKILL.md` as of commit 035a726 |
 | Claude Code version | 2.1.142 |
 | Run date | 2026-10-13 |
 | Environment | Fresh project-level install from a local clone in an empty temp folder; personal CLAUDE.md, user-level skills and settings, and MCP servers disabled |
