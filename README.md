@@ -1,6 +1,6 @@
 # /ux-strategy — UX audit for the screen you built: what to fix first
 
-**When you've built a screen or flow (for example with Claude Code) and aren't sure it's easy to use, give it the screenshots and get the 3 fixes chosen by a UX audit (Nielsen heuristic evaluation with severity 0–4, checked against the user's main task), why each matters, and fix instructions you can paste back into Claude Code. Ask for more and you get the full audit or a UX strategy: information architecture, user journeys, and priorities.**
+**You've built a screen or flow, for example with Claude Code. You aren't sure it's easy to use. Give it the screenshots. You get the 3 fixes chosen by a UX audit. The audit is a Nielsen heuristic evaluation with severity 0–4. It is checked against the user's main task. Each fix says why it matters. Each fix also comes with instructions you can paste back into Claude Code. Ask for more and you get the full audit or a UX strategy. That covers information architecture, user journeys, and priorities.**
 
 ## Example
 
